@@ -1,0 +1,14 @@
+[
+  {
+    "id": "0b401073-bd7b-4e3e-a7e1-410bd8123dd8",
+    "title": "My first task",
+    "description": "",
+    "priority": 2,
+    "status": "todo",
+    "created_at": "2026-06-22T22:58:46.523463",
+    "updated_at": "2026-06-22T22:58:46.523463",
+    "due_date": null,
+    "completed_at": null,
+    "tags": []
+  }
+]

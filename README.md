@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # ai-code-exercises
 
 Code Exercises for AI Course for Software Engineers.
@@ -18,3 +19,7 @@ This is still a work in progress - the idea is to capture the various exercise s
 | Debugging | AI Solution Verification Challenge | [Instructions](https://ai.wethinkco.de/ai-software/ai-use-cases/exercises/exercise-debug-limitations/) | [Starter Code](use-cases/debug-limitations/README.md) |
 | Testing | Using AI to help with testing | [Instructions](https://ai.wethinkco.de/ai-software/ai-use-cases/exercises/exercise-testing-001/) | [Starter Code](use-cases/testing-001) |
 | Refactoring | Function Decomposition Challenge | [Instructions](https://ai.wethinkco.de/ai-software/ai-use-cases/exercises/exercise-refactor-functions/) | [Starter Code](use-cases/refactor-functions) |
+=======
+# wethinkcode_ai_repo
+wethinkcode_ai_repo
+>>>>>>> b48c04f3f18f5cdc849a1356dd0e4fcb276827b4
