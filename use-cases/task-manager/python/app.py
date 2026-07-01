@@ -3,6 +3,8 @@ import argparse
 from datetime import datetime, timedelta
 from .models import Task, TaskPriority, TaskStatus
 from .storage import TaskStorage
+import csv
+from datetime import datetime, timedelta
 
 class TaskManager:
     def __init__(self, storage_path="tasks.json"):
@@ -24,6 +26,7 @@ class TaskManager:
         return task_id
 
     def list_tasks(self, status_filter=None, priority_filter=None, show_overdue=False):
+        self.mark_abandoned_tasks() #added
         if show_overdue:
             return self.storage.get_overdue_tasks()
 
@@ -82,6 +85,58 @@ class TaskManager:
             self.storage.save()
             return True
         return False
+    
+    #added
+    def export_tasks_to_csv(self, filename):
+        tasks = self.storage.get_all_tasks()
+
+        try:
+            with open(filename, mode="w", newline="") as file:
+                writer = csv.writer(file)
+
+                # Header row
+                writer.writerow([
+                    "ID", "Title", "Description",
+                    "Status", "Priority", "Due Date", "Tags"
+                ])
+
+                for task in tasks:
+                    writer.writerow([
+                        task.id,
+                        task.title,
+                        task.description,
+                        task.status.value,
+                        task.priority.value,
+                        task.due_date.strftime("%Y-%m-%d") if task.due_date else "",
+                        ", ".join(task.tags)
+                    ])
+
+            return True
+        except Exception as e:
+            print(f"Error exporting tasks: {e}")
+            return False
+        
+    #added
+    def mark_abandoned_tasks(self):
+        tasks = self.storage.get_all_tasks()
+        seven_days_ago = datetime.now() - timedelta(days=7)
+
+        updated = False
+
+        for task in tasks:
+            if (
+                task.due_date and
+                task.due_date < seven_days_ago and
+                task.status != TaskStatus.DONE and
+                task.status != TaskStatus.ABANDONED and
+                task.priority != TaskPriority.HIGH
+            ):
+                task.status = TaskStatus.ABANDONED
+                updated = True
+
+        if updated:
+            self.storage.save()
+
 
     def get_statistics(self):
         tasks = self.storage.get_all_tasks()
@@ -114,4 +169,8 @@ class TaskManager:
             "overdue": overdue_count,
             "completed_last_week": completed_recently
         }
+
+
+
+
 

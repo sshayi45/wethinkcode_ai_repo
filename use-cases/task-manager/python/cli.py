@@ -1,6 +1,6 @@
 # task_manager/cli.py
 import argparse
-from datetime import datetime
+from datetime import datetime, timedelta
 from .app import TaskManager
 from .models import TaskPriority, TaskStatus
 
@@ -9,7 +9,9 @@ def format_task(task):
         TaskStatus.TODO: "[ ]",
         TaskStatus.IN_PROGRESS: "[>]",
         TaskStatus.REVIEW: "[?]",
-        TaskStatus.DONE: "[✓]"
+        TaskStatus.DONE: "[✓]",
+        TaskStatus.ABANDONED: "[X]" #added
+
     }
 
     priority_symbol = {
@@ -73,6 +75,10 @@ def main():
     show_parser = subparsers.add_parser("show", help="Show task details")
     show_parser.add_argument("task_id", help="Task ID")
 
+#added
+    export_parser = subparsers.add_parser("export", help="Export tasks to CSV")
+    export_parser.add_argument("filename", help="CSV file name")
+
     delete_parser = subparsers.add_parser("delete", help="Delete a task")
     delete_parser.add_argument("task_id", help="Task ID")
 
@@ -107,6 +113,13 @@ def main():
             print(f"Updated task status to {args.status}")
         else:
             print("Failed to update task status. Task not found.")
+
+    #added
+    elif args.command == "export":
+        if task_manager.export_tasks_to_csv(args.filename):
+            print(f"Tasks exported to {args.filename}")
+        else:
+            print("Failed to export tasks.")
 
     elif args.command == "priority":
         if task_manager.update_task_priority(args.task_id, args.priority):

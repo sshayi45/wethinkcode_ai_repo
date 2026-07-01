@@ -14,6 +14,7 @@ class TaskStatus(Enum):
     IN_PROGRESS = "in_progress"
     REVIEW = "review"
     DONE = "done"
+    ABANDONED = "abandoned" #added new status
 
 class Task:
     def __init__(self, title, description="", priority=TaskPriority.MEDIUM,

@@ -1,0 +1,66 @@
+Task_Manager
+
+The application does not use an interactive menu. Instead, it uses a command-based CLI interface powered by argument parsing (argparse). Each command triggers specific functionality in the application
+
+Example 
+python -m python.cli create "My first task"
+Output 
+Created task with ID: 0b401073-bd7b-4e3e-a7e1-410bd8123dd8
+
+Interaction breakdown:
+
+
+cli.py:
+
+Parses user commands using argparse
+Decides which action to execute
+
+
+app.py:
+
+Contains application logic
+Calls functions to create/update/delete tasks
+
+models.py :
+
+Defines the structure of a task (e.g., ID, status, priority)
+Ensures consistency of task data
+
+storage.py :
+
+Saves and loads tasks
+Handles persistence (likely file-based)
+
+Ex2:
+Implementation Outcome
+The "Export Tasks to CSV" feature was successfully implemented and tested.
+The feature was triggered using: python -m python.cli export tasks.csv
+Output: Tasks exported to tasks.csv
+
+The feature was added by:
+
+Extending CLI commands (cli.py)
+Adding logic in the application layer (app.py)
+
+The system design made it easy to add new features without modifying existing components extensively, demonstrating good modular design and maintainability
+
+ex3:
+The Task Manager uses a well-defined domain model centered around the Task entity, supported by enums for status and priority.
+
+The model includes business logic inside the entity
+It enforces key rules like:
+
+Task completion
+Overdue detection
+
+
+This makes the system:
+
+Easy to extend
+Consistent
+Aligned with real-world concepts
+
+ex4 : Modify models.py to include ABANDONED
+Added logic in app.py to detect overdue tasks
+Trigger the rule during task operations
+updated CLI display
